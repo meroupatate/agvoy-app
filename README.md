@@ -6,5 +6,5 @@ Création du projet Symfony d’agence de voyages pour Couettes et cafés
 ```bash
 git clone https://github.com/meroupatate/agvoy-app.git
 cd agvoy-app/
-composer install
+composer update -v
 ```
