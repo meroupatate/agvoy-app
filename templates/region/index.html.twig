@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Region index</h1>
 
+    <a href="{{ path('region_new') }}" role="button" class="btn btn-info"><i class="fa fa-plus"></i> Add new region</a>
+
     <table class="table">
         <thead>
             <tr>
@@ -23,8 +25,8 @@
                 <td>{{ region.presentation }}</td>
                 <td>{{ region.country }}</td>
                 <td>
-                    <a href="{{ path('region_show', {'id': region.id}) }}">show</a>
-                    <a href="{{ path('region_edit', {'id': region.id}) }}">edit</a>
+                    <a href="{{ path('region_show', {'id': region.id}) }}" role="button" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                    <a href="{{ path('region_edit', {'id': region.id}) }}" role="button" class="btn btn-info"><i class="fa fa-edit"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +37,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('region_new') }}">Create new</a>
 {% endblock %}
