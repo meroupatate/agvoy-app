@@ -3,51 +3,59 @@
 {% block title %}Room index{% endblock %}
 
 {% block body %}
-    <h1>Room index</h1>
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Room index</b></div>
+        <div class="card-body">
+            <a href="{{ path('room_new') }}" role="button" class="btn btn-info" style="margin-bottom: 10px"><i
+                        class="fa fa-plus"></i> Add new room</a>
 
-    <a href="{{ path('room_new') }}" role="button" class="btn btn-info"><i class="fa fa-plus"></i> Add new room</a>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Summary</th>
-                <th>Description</th>
-                <th>Capacity</th>
-                <th>Superficy</th>
-                <th>Price</th>
-                <th>Address</th>
-                <th>Actions</th>
-                <th>Like</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for room in rooms %}
-            <tr>
-                <td>{{ room.id }}</td>
-                <td>{{ room.summary }}</td>
-                <td>{{ room.description }}</td>
-                <td>{{ room.capacity }}</td>
-                <td>{{ room.superficy }}</td>
-                <td>{{ room.price }}</td>
-                <td>{{ room.address }}</td>
-                <td>
-                    <a href="{{ path('room_show', {'id': room.id}) }}" role="button" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                    <a href="{{ path('room_edit', {'id': room.id}) }}" role="button" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                </td>
-                <td>
-                {% if room.id not in likes %}
-                	<a href="{{ path('room_like', {'id': room.id}) }}" role="button" class="btn btn-danger"><i class="fa fa-thumbs-up"></i></a>
-				{% else %}
-					<a href="{{ path('room_like', {'id': room.id}) }}" role="button" class="btn btn-danger"><i class="fa fa-thumbs-down"></i></a>
-                {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Summary</th>
+                    <th>Description</th>
+                    <th>Capacity</th>
+                    <th>Superficy</th>
+                    <th>Price</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                    <th>Like / Dislike</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for room in rooms %}
+                    <tr>
+                        <td>{{ room.id }}</td>
+                        <td>{{ room.summary }}</td>
+                        <td>{{ room.description }}</td>
+                        <td>{{ room.capacity }}</td>
+                        <td>{{ room.superficy }}</td>
+                        <td>{{ room.price }}</td>
+                        <td>{{ room.address }}</td>
+                        <td>
+                            <a href="{{ path('room_show', {'id': room.id}) }}" role="button" class="btn btn-info"><i
+                                        class="fa fa-eye"></i></a>
+                            <a href="{{ path('room_edit', {'id': room.id}) }}" role="button" class="btn btn-info"><i
+                                        class="fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                            {% if room.id not in likes %}
+                                <a href="{{ path('room_like', {'id': room.id}) }}" role="button"
+                                   class="btn btn-success"><i class="fa fa-thumbs-up"></i></a>
+                            {% else %}
+                                <a href="{{ path('room_like', {'id': room.id}) }}" role="button" class="btn btn-danger"><i
+                                            class="fa fa-thumbs-down"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No room found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

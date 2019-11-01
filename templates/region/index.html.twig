@@ -3,38 +3,44 @@
 {% block title %}Region index{% endblock %}
 
 {% block body %}
-    <h1>Region index</h1>
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Region index</b></div>
+        <div class="card-body">
+            <a href="{{ path('region_new') }}" role="button" class="btn btn-info" style="margin-bottom: 10px"><i
+                        class="fa fa-plus"></i> Add new region</a>
 
-    <a href="{{ path('region_new') }}" role="button" class="btn btn-info"><i class="fa fa-plus"></i> Add new region</a>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Presentation</th>
-                <th>Country</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for region in regions %}
-            <tr>
-                <td>{{ region.id }}</td>
-                <td>{{ region.name }}</td>
-                <td>{{ region.presentation }}</td>
-                <td>{{ region.country }}</td>
-                <td>
-                    <a href="{{ path('region_show', {'id': region.id}) }}" role="button" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                    <a href="{{ path('region_edit', {'id': region.id}) }}" role="button" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Presentation</th>
+                    <th>Country</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for region in regions %}
+                    <tr>
+                        <td>{{ region.id }}</td>
+                        <td>{{ region.name }}</td>
+                        <td>{{ region.presentation }}</td>
+                        <td>{{ region.country }}</td>
+                        <td>
+                            <a href="{{ path('region_show', {'id': region.id}) }}" role="button" class="btn btn-info"><i
+                                        class="fa fa-eye"></i></a>
+                            <a href="{{ path('region_edit', {'id': region.id}) }}" role="button" class="btn btn-info"><i
+                                        class="fa fa-edit"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">No region found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

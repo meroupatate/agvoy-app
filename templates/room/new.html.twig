@@ -3,9 +3,8 @@
 {% block title %}New Room{% endblock %}
 
 {% block body %}
-    <h1>Create new Room</h1>
-
-    {{ include('room/_form.html.twig') }}
-
-    <a href="{{ path('room_index') }}">back to list</a>
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Create new Room</b></div>
+        {{ include('room/_form.html.twig') }}
+    </div>
 {% endblock %}

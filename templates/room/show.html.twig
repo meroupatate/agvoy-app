@@ -3,44 +3,53 @@
 {% block title %}Room{% endblock %}
 
 {% block body %}
-    <h1>Room</h1>
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Room</b></div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ room.id }}</td>
+                </tr>
+                <tr>
+                    <th>Summary</th>
+                    <td>{{ room.summary }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ room.description }}</td>
+                </tr>
+                <tr>
+                    <th>Capacity</th>
+                    <td>{{ room.capacity }} people</td>
+                </tr>
+                <tr>
+                    <th>Superficy</th>
+                    <td>{{ room.superficy }} m²</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>{{ room.price }}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{{ room.address }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('region_index') }}" role="button" class="btn btn-secondary">Cancel</a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ room.id }}</td>
-            </tr>
-            <tr>
-                <th>Summary</th>
-                <td>{{ room.summary }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ room.description }}</td>
-            </tr>
-            <tr>
-                <th>Capacity</th>
-                <td>{{ room.capacity }}</td>
-            </tr>
-            <tr>
-                <th>Superficy</th>
-                <td>{{ room.superficy }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ room.price }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ room.address }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('room_index') }}">back to list</a>
-
-    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
-
-    {{ include('room/_delete_form.html.twig') }}
+                    <a href="{{ path('room_edit', {'id': room.id}) }}" role="button" class="btn btn-info"><i
+                                class="fa fa-edit"></i>
+                        Edit</a>
+                </div>
+                <div class="col align-self-end">{{ include('room/_delete_form.html.twig') }}</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
