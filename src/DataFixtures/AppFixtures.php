@@ -89,5 +89,17 @@ class AppFixtures extends Fixture
         $room2->setOwner($this->getReference(self::JEANNE_MICHELINE_OWNER_REFERENCE));
         $manager->persist($room2);
         $manager->flush();
+
+        $room3 = new Room();
+        $room3->setSummary("La cousine de Jean Michel vous héberge CHEZ ELLE");
+        $room3->setDescription("Toujours aussi jolie la cousine");
+        $room3->setCapacity(1);
+        $room3->setPrice(999.99);
+        $room3->setSuperficy(30);
+        $room3->setAddress("1 impasse de la cousine");
+        $room3->addRegion($this->getReference(self::BRETAGNE_REGION_REFERENCE));
+        $room3->setOwner($this->getReference(self::JEANNE_MICHELINE_OWNER_REFERENCE));
+        $manager->persist($room3);
+        $manager->flush();
     }
 }

@@ -56,7 +56,7 @@ class Room
     private $owner;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Region", mappedBy="rooms")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Region", inversedBy="rooms")
      */
     private $regions;
 

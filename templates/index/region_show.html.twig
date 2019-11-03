@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ads in the {{ region.name }} area{% endblock %}
+
+{% block body %}
+    <p><h1>Ads in the {{ region.name }} area</h1></p>
+    {% for room in region.rooms %}
+        <div class="card bg-light" style="margin: 10px">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <i class="fa fa-hotel"></i> <b>{{ room.summary }}</b>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#" role="button" class="btn btn-warning btn-sm" style="float: right">Book it</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>Owner</th>
+                            <td>{{ room.owner }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ room.address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ room.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Capacity</th>
+                            <td>{{ room.capacity }}</td>
+                        </tr>
+                        <tr>
+                            <th>Superficy</th>
+                            <td>{{ room.superficy }} m²</td>
+                        </tr>
+                        <tr>
+                            <th>Price</th>
+                            <td>{{ room.price }} €</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
