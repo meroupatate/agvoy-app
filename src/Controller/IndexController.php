@@ -16,20 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="home", methods="GET")
-     */
-    public function index()
-    {
-        return $this->render('index/index.html.twig');
-    }
-
-    /**
-     * @Route("/index_region", name="index_region", methods={"GET", "POST"})
+     * @Route("/", name="home", methods={"GET", "POST"})
      * @param Request $request
      * @param RegionRepository $regionRepository
      * @return Response
      */
-    public function index_region(Request $request, RegionRepository $regionRepository)
+    public function index(Request $request, RegionRepository $regionRepository)
     {
         $form = $this->createForm(IndexRegionType::class);
         $form->handleRequest($request);
@@ -40,7 +32,7 @@ class IndexController extends AbstractController
                 'id' => $id,
             ]));
         }
-        return $this->render('index/region.html.twig', [
+        return $this->render('index/index.html.twig', [
             'regions' => $regionRepository->findAll(),
             'form' => $form->createView()
         ]);

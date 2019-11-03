@@ -1,12 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Couette&Café{% endblock %}
+{% block title %}Choose your region{% endblock %}
 
 {% block body %}
-
-    <div class="example-wrapper">
-        <h1>Welcome guest! ✅</h1>
-
-        Our C&C website is coming soon!
-    </div>
+    <form method="post">
+        <div class="form-group">
+            <div class="row justify-content-center align-self-center" style="margin: 15px">
+                <div class="card bg-light">
+                    <div class="card-header"><b>Choose your region</b></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                {{ form_start(form) }}
+                                {{ form_widget(form.id, {
+                                    'attr': {
+                                        'class': 'selectpicker',
+                                        'data-live-search': "true",
+                                        'data-container':"body",
+                                        'data-style':"btn-light"
+                                    }
+                                }) }}
+                            </div>
+                            <div class="col">
+                                <button type="submit"
+                                        class="btn btn-warning align-self-end">{{ button_label|default('OK') }}</button>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}
