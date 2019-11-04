@@ -60,9 +60,21 @@ class Room
      */
     private $regions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Unavailability", mappedBy="room", orphanRemoval=true)
+     */
+    private $unavailabilities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="room", orphanRemoval=true)
+     */
+    private $reservations;
+
     public function __construct()
     {
         $this->regions = new ArrayCollection();
+        $this->unavailabilities = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,5 +196,67 @@ class Room
     
     public function __toString() {
         return (string) $this->getId();
+    }
+
+    /**
+     * @return Collection|Unavailability[]
+     */
+    public function getUnavailabilities(): Collection
+    {
+        return $this->unavailabilities;
+    }
+
+    public function addUnavailability(Unavailability $unavailability): self
+    {
+        if (!$this->unavailabilities->contains($unavailability)) {
+            $this->unavailabilities[] = $unavailability;
+            $unavailability->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUnavailability(Unavailability $unavailability): self
+    {
+        if ($this->unavailabilities->contains($unavailability)) {
+            $this->unavailabilities->removeElement($unavailability);
+            // set the owning side to null (unless already changed)
+            if ($unavailability->getRoom() === $this) {
+                $unavailability->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getRoom() === $this) {
+                $reservation->setRoom(null);
+            }
+        }
+
+        return $this;
     }
 }
