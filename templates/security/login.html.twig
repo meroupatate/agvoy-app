@@ -8,12 +8,9 @@
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        {% if app.user %}
-            <div class="alert alert-info">
-                You are logged in as {{ app.user.username }}, click <a href="{{ path('app_logout') }}">here</a> to
-                logout.
-            </div>
-        {% endif %}
+        <div class="alert alert-info">
+            Not registered yet? Click <a href="{{ path('app_register') }}">here</a> to create your account.
+        </div>
         <div class="row justify-content-center align-self-center" style="margin: 15px">
             <div class="card bg-light">
                 <div class="card-header"><b>Login</b></div>
@@ -28,20 +25,9 @@
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
                     >
-
-                    {#
-                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                        See https://symfony.com/doc/current/security/remember_me.html
-
-                        <div class="checkbox mb-3">
-                            <label>
-                                <input type="checkbox" name="_remember_me"> Remember me
-                            </label>
-                        </div>
-                    #}
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-success" type="submit" style="float: right;">
                         Sign in
                     </button>
                 </div>

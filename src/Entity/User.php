@@ -35,6 +35,16 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Owner", inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $owner;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Customer", inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $customer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -118,6 +128,30 @@ class User implements UserInterface
         if(!in_array($role,$this->roles)) {
             $this->roles[] = $role;
         }
+        return $this;
+    }
+
+    public function getOwner(): ?Owner
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Owner $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
+
         return $this;
     }
 
