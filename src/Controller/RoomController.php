@@ -22,7 +22,6 @@ class RoomController extends AbstractController
     {
         return $this->render('room/index.html.twig', [
             'rooms' => $roomRepository->findAll(),
-            'likes' => $this->get('session')->get('likes'),
         ]);
     }
 
@@ -85,45 +84,12 @@ class RoomController extends AbstractController
      */
     public function delete(Request $request, Room $room): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $room->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($room);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('room_index');
-    }
-    
-    /**
-     * Like a room
-     *
-     * @Route("/like/{id}", name="room_like")
-     *
-     * @param int $id
-     */
-    public function like($id)
-    {
-        $likes = $this->get('session')->get('likes');
-        
-        if ( ! isset($likes) )
-        {
-            $this->get('session')->set('likes', []);
-        }
-        
-        $likes = $this->get('session')->get('likes');
-        
-        // si l'identifiant n'est pas présent dans le tableau des likes, l'ajouter
-        if (! in_array($id, $likes) )
-        {
-            $likes[] = $id;
-        }
-        else
-        // sinon, le retirer du tableau
-        {
-            $likes = array_diff($likes, array($id));
-        }
-        $this->get('session')->set('likes', $likes);
-        
         return $this->redirectToRoute('room_index');
     }
 }

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ads in the {{ region.name }} area{% endblock %}
+{% block title %}My favorite rooms{% endblock %}
 
 {% block body %}
-    <p><h1>Ads in the {{ region.name }} area</h1></p>
-    {% for room in region.rooms %}
+    <p><h1>My favorite rooms</h1></p>
+    {% for room in rooms %}
         <div class="card bg-light" style="margin: 10px">
             <div class="card-header">
                 <div class="row">
@@ -13,14 +13,6 @@
                     </div>
                     <div class="col-sm-4">
                         <a href="#" role="button" class="btn btn-warning btn-sm" style="float: right; margin-left:5px;" >Book it</a>
-                        {% if room.id not in likes %}
-                            <a href="{{ path('room_like', {'id': room.id}) }}" role="button"
-                               class="btn btn-outline-secondary btn-sm" style="float: right"><i class="fa fa-heart"></i></a>
-                        {% else %}
-                            <a href="{{ path('room_like', {'id': room.id}) }}" role="button"
-                               class="btn btn-danger btn-sm" style="float: right"><i
-                                        class="fa fa-heart"></i></a>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -57,5 +49,7 @@
                 </div>
             </div>
         </div>
+    {% else %}
+    You don't have any favorite rooms
     {% endfor %}
 {% endblock %}

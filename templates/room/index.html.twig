@@ -22,7 +22,6 @@
                         <th>Price</th>
                         <th>Address</th>
                         <th>Actions</th>
-                        <th>Like / Dislike</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,16 +41,6 @@
                                             class="fa fa-eye"></i></a>
                                 <a href="{{ path('room_edit', {'id': room.id}) }}" role="button" class="btn btn-info"><i
                                             class="fa fa-edit"></i></a>
-                            </td>
-                            <td>
-                                {% if room.id not in likes %}
-                                    <a href="{{ path('room_like', {'id': room.id}) }}" role="button"
-                                       class="btn btn-success"><i class="fa fa-thumbs-up"></i></a>
-                                {% else %}
-                                    <a href="{{ path('room_like', {'id': room.id}) }}" role="button"
-                                       class="btn btn-danger"><i
-                                                class="fa fa-thumbs-down"></i></a>
-                                {% endif %}
                             </td>
                         </tr>
                     {% else %}
