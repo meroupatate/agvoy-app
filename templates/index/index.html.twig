@@ -3,12 +3,12 @@
 {% block title %}Choose your region{% endblock %}
 
 {% block body %}
-    <form method="post">
-        <div class="form-group">
-            <div class="row justify-content-center align-self-center" style="margin: 15px">
-                <div class="card bg-light">
-                    <div class="card-header"><b>Choose your region</b></div>
-                    <div class="card-body">
+    <div class="col d-flex justify-content-center">
+        <div class="card bg-light" style="margin-top: 30vh; transform: translateY(-50%):">
+            <div class="card-header"><b>Choose your region</b></div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-group">
                         <div class="row">
                             <div class="col">
                                 {{ form_start(form) }}
@@ -28,8 +28,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
+
+
 {% endblock %}

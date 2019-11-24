@@ -3,7 +3,7 @@
 {% block title %}Ads in the {{ region.name }} area{% endblock %}
 
 {% block body %}
-    <p><h1>Ads in the {{ region.name }} area</h1></p>
+    <p><h1><span style="color: white">Ads in the {{ region.name }} area</span></h1></p>
     {% for room in region.rooms %}
         <div class="card bg-light" style="margin: 10px">
             <div class="card-header">
@@ -12,7 +12,8 @@
                         <i class="fa fa-hotel"></i> <b>{{ room.summary }}</b>
                     </div>
                     <div class="col-sm-4">
-                        <a href="#" role="button" class="btn btn-warning btn-sm" style="float: right; margin-left:5px;" >Book it</a>
+                        <a href="#" role="button" class="btn btn-warning btn-sm" style="float: right; margin-left:5px;">Book
+                            it</a>
                         {% if room.id not in likes %}
                             <a href="{{ path('room_like', {'id': room.id}) }}" role="button"
                                class="btn btn-outline-secondary btn-sm" style="float: right"><i class="fa fa-heart"></i></a>
@@ -57,5 +58,6 @@
                 </div>
             </div>
         </div>
+
     {% endfor %}
 {% endblock %}

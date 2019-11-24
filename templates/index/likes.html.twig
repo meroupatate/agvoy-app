@@ -3,7 +3,7 @@
 {% block title %}My favorite rooms{% endblock %}
 
 {% block body %}
-    <p><h1>My favorite rooms</h1></p>
+    <p><h1><span style="color: white">My favorite rooms</span></h1></p>
     {% for room in rooms %}
         <div class="card bg-light" style="margin: 10px">
             <div class="card-header">
@@ -12,7 +12,9 @@
                         <i class="fa fa-hotel"></i> <b>{{ room.summary }}</b>
                     </div>
                     <div class="col-sm-4">
-                        <a href="#" role="button" class="btn btn-warning btn-sm" style="float: right; margin-left:5px;" >Book it</a>
+                        <a href="#" role="button" class="btn btn-warning btn-sm"
+                           style="float: right; margin-left:5px;">Book
+                            it</a>
                     </div>
                 </div>
             </div>
@@ -50,6 +52,6 @@
             </div>
         </div>
     {% else %}
-    You don't have any favorite rooms
+        <p style="margin-top: 20px"><span style="color: white"> You don't have any favorite rooms :(</span></p>
     {% endfor %}
 {% endblock %}
