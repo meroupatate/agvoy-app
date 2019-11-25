@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unavailability index{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Unavailability index</b></div>
+        <div class="card-body">
+            <a href="{{ path('unavailability_new') }}" role="button" class="btn btn-info" style="margin-bottom: 10px"><i
+                        class="fa fa-plus"></i> Add new unavailability</a>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Room</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for unavailability in unavailabilities %}
+                        <tr>
+                            <td>{{ unavailability.id }}</td>
+                            <td>{{ unavailability.room }}</td>
+                            <td>{{ unavailability.startDate ? unavailability.startDate|date('Y-m-d') : '' }}</td>
+                            <td>{{ unavailability.endDate ? unavailability.endDate|date('Y-m-d') : '' }}</td>
+                            <td>
+                                <a href="{{ path('unavailability_show', {'id': unavailability.id}) }}" role="button" class="btn btn-info"><i
+                                            class="fa fa-eye"></i></a>
+                                <a href="{{ path('unavailability_edit', {'id': unavailability.id}) }}" role="button" class="btn btn-info"><i
+                                            class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No unavailability found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
