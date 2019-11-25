@@ -4,7 +4,7 @@
 
 {% block body %}
     <p><h1><span style="color: white">Ads in the {{ region.name }} area</span></h1></p>
-    {% for room in region.rooms %}
+    {% for room in rooms %}
         <div class="card bg-light" style="margin: 10px">
             <div class="card-header">
                 <div class="row">
@@ -58,6 +58,7 @@
                 </div>
             </div>
         </div>
-
+	{% else %}
+	<p style="margin-top: 20px"><span style="color: white"> No room available during this period :(</span></p>
     {% endfor %}
 {% endblock %}

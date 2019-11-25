@@ -11,8 +11,11 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
+                            {% if startDate is defined %}
+                            {{ dump(startDate) }}
+                            {% endif %}
                                 {{ form_start(form) }}
-                                {{ form_widget(form.id, {
+                                {{ form_row(form.id, {
                                     'attr': {
                                         'class': 'selectpicker',
                                         'data-live-search': "true",

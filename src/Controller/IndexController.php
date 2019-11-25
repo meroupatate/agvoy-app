@@ -6,11 +6,17 @@ use App\Entity\Region;
 use App\Entity\Room;
 use App\Form\IndexRegionType;
 use App\Repository\RegionRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * Controleur de la page d'accueil
@@ -25,13 +31,35 @@ class IndexController extends AbstractController
      */
     public function index(Request $request, RegionRepository $regionRepository)
     {
-        $form = $this->createForm(IndexRegionType::class);
+        $defaultData = ['message' => 'Type your message here'];
+        $form = $this->createFormBuilder($defaultData)
+        ->add('id', EntityType::class, [
+            'class' => Region::class,
+            'choice_label' => 'name',
+            'choice_value' => 'id',
+            'label' => false,
+        ])
+        ->add('startDate', DateType::class, [
+            'widget' => 'choice',
+            'input'  => 'datetime_immutable'
+        ])
+        ->add('endDate', DateType::class, [
+            'widget' => 'choice',
+            'input'  => 'datetime_immutable'
+        ])
+        ->getForm();
+        
         $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityObject = $form->get('id')->getData();
-            $id = $entityObject->getId();
+            $data = $request->request->get('form');
+            $id = $data['id'];
+            $startDate = $data['startDate'];
+            $endDate = $data['endDate'];
             return $this->redirect($this->generateUrl('index_region_show', [
                 'id' => $id,
+                'start' =>  implode('-', $startDate),
+                'end' => implode('-', $endDate),
             ]));
         }
         return $this->render('index/index.html.twig', [
@@ -41,15 +69,39 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/index_region/{id}", name="index_region_show", methods="GET")
+     * @Route("/index_region/{id}/{start}/{end}", name="index_region_show", methods="GET")
      * @param Region $region
      * @return Response
      */
-    public function index_region_show(Region $region)
+    public function index_region_show(Region $region, String $start, String $end)
     {
+        $startDate = explode('-', $start);
+        $endDate = explode('-', $end);
+        $rooms = [];
+        
+        foreach ($region->getRooms() as $room) {
+            $found = True;
+            foreach($room->getReservations() as $res) {
+                if ($startDate >= $res->getStartDate() || $startDate <= $res->getEndDate()
+                    || $endDate >= $res->getStartDate() || $endDate <= $res->getEndDate()) {
+                    $found = False;
+                }
+            }
+            foreach($room->getUnavailabilities() as $unav) {
+                if ($startDate >= $unav->getStartDate() || $startDate <= $unav->getEndDate()
+                    || $endDate >= $unav->getStartDate() || $endDate <= $unav->getEndDate()) {
+                        $found = False;
+                    }
+            }
+            if ($found) {
+                $rooms[] = $room;
+            }
+        }
+        
         return $this->render('index/region_show.html.twig', [
-            'region' => $region,
-            'likes' => $this->get('session')->get('likes'),
+           'region' => $region,
+           'rooms' => $rooms,
+           'likes' => $this->get('session')->get('likes'),
         ]);
     }
 
