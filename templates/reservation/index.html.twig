@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation index{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Reservation index</b></div>
+        <div class="card-body">
+            <a href="{{ path('reservation_new') }}" role="button" class="btn btn-info" style="margin-bottom: 10px"><i
+                        class="fa fa-plus"></i> Add new reservation</a>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Customer</th>
+                        <th>Room</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.id }}</td>
+                            <td>{{ reservation.customer }}</td>
+                            <td>{{ reservation.room }}</td>
+                            <td>{{ reservation.startDate ? reservation.startDate|date('Y-m-d') : '' }}</td>
+                            <td>{{ reservation.endDate ? reservation.endDate|date('Y-m-d') : '' }}</td>
+                            <td>
+                                <a href="{{ path('reservation_show', {'id': reservation.id}) }}" role="button" class="btn btn-info"><i
+                                            class="fa fa-eye"></i></a>
+                                <a href="{{ path('reservation_edit', {'id': reservation.id}) }}" role="button" class="btn btn-info"><i
+                                            class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

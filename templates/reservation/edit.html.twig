@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Reservation{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Edit Reservation</b></div>
+        {{ include('reservation/_edit_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+{% endblock %}

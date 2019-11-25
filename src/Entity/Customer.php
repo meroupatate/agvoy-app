@@ -137,4 +137,8 @@ class Customer
 
         return $this;
     }
+
+    public function __toString() {
+        return (string) $this->getFirstname() . ' ' . (string) $this->getFamilyName() ;
+    }
 }
