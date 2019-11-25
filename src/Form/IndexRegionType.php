@@ -15,18 +15,18 @@ class IndexRegionType extends AbstractType
     {
         $builder
             ->add('id', EntityType::class, [
-                'class' => Region::class,
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'label' => false,
-            ])
+            'class' => Region::class,
+            'choice_label' => 'name',
+            'choice_value' => 'id',
+            'label' => false,
+        ])
             ->add('startDate', DateType::class, [
                 'widget' => 'choice',
-                'input'  => 'datetime_immutable'
+                'input' => 'datetime_immutable'
             ])
             ->add('endDate', DateType::class, [
                 'widget' => 'choice',
-                'input'  => 'datetime_immutable'
+                'input' => 'datetime_immutable'
             ])
             ->getForm();
     }

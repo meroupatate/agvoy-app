@@ -33,24 +33,26 @@ class IndexController extends AbstractController
     {
         $defaultData = ['message' => 'Type your message here'];
         $form = $this->createFormBuilder($defaultData)
-        ->add('id', EntityType::class, [
-            'class' => Region::class,
-            'choice_label' => 'name',
-            'choice_value' => 'id',
-            'label' => false,
-        ])
-        ->add('startDate', DateType::class, [
-            'widget' => 'choice',
-            'input'  => 'datetime_immutable'
-        ])
-        ->add('endDate', DateType::class, [
-            'widget' => 'choice',
-            'input'  => 'datetime_immutable'
-        ])
-        ->getForm();
-        
+            ->add('id', EntityType::class, [
+                'class' => Region::class,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'label' => false,
+            ])
+            ->add('startDate', DateType::class, [
+                'widget' => 'choice',
+                'input' => 'datetime_immutable',
+                'label' => false,
+            ])
+            ->add('endDate', DateType::class, [
+                'widget' => 'choice',
+                'input' => 'datetime_immutable',
+                'label' => false,
+            ])
+            ->getForm();
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $request->request->get('form');
             $id = $data['id'];
@@ -58,7 +60,7 @@ class IndexController extends AbstractController
             $endDate = $data['endDate'];
             return $this->redirect($this->generateUrl('index_region_show', [
                 'id' => $id,
-                'start' =>  implode('-', $startDate),
+                'start' => implode('-', $startDate),
                 'end' => implode('-', $endDate),
             ]));
         }
@@ -78,42 +80,46 @@ class IndexController extends AbstractController
         $startDate = explode('-', $start);
         $endDate = explode('-', $end);
         $rooms = [];
-        
+
         foreach ($region->getRooms() as $room) {
             $found = True;
-            foreach($room->getReservations() as $res) {
+            foreach ($room->getReservations() as $res) {
                 if ($startDate >= $res->getStartDate() || $startDate <= $res->getEndDate()
                     || $endDate >= $res->getStartDate() || $endDate <= $res->getEndDate()) {
                     $found = False;
                 }
             }
-            foreach($room->getUnavailabilities() as $unav) {
+            foreach ($room->getUnavailabilities() as $unav) {
                 if ($startDate >= $unav->getStartDate() || $startDate <= $unav->getEndDate()
                     || $endDate >= $unav->getStartDate() || $endDate <= $unav->getEndDate()) {
-                        $found = False;
-                    }
+                    $found = False;
+                }
             }
             if ($found) {
                 $rooms[] = $room;
             }
         }
-        
+
         return $this->render('index/region_show.html.twig', [
-           'region' => $region,
-           'rooms' => $rooms,
-           'likes' => $this->get('session')->get('likes'),
+            'region' => $region,
+            'rooms' => $rooms,
+            'likes' => $this->get('session')->get('likes'),
+            'start' => implode('-', $startDate),
+            'end' => implode('-', $endDate),
         ]);
     }
 
     /**
      * Like a room
      *
-     * @Route("/like/{id}", name="room_like")
+     * @Route("/like/{id}/{start}/{end}", name="room_like")
      *
      * @param int $id
+     * @param $start
+     * @param $end
      * @return RedirectResponse
      */
-    public function like($id)
+    public function like($id, $start, $end)
     {
         $likes = $this->get('session')->get('likes');
 
@@ -137,7 +143,7 @@ class IndexController extends AbstractController
             ->find($id);
         $region = $room->getRegions()[0];
 
-        return $this->redirectToRoute('index_region_show', array('id' => $region->getId()));
+        return $this->redirectToRoute('index_region_show', array('id' => $region->getId(), 'start' => $start, 'end' => $end));
     }
 
     /**
@@ -153,7 +159,7 @@ class IndexController extends AbstractController
         }
 
         $likes = $this->get('session')->get('likes');
-        
+
         $rooms = array();
         foreach ($likes as $like) {
             $rooms[] = $this->getDoctrine()

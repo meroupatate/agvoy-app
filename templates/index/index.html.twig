@@ -1,36 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Choose your region{% endblock %}
+{% block title %}Couette & Café{% endblock %}
 
 {% block body %}
-    <div class="col d-flex justify-content-center">
-        <div class="card bg-light" style="margin-top: 20vh; transform: translateY(-50%):">
-            <div class="card-header"><b>Choose your region</b></div>
+    <div class="col">
+        <div class="card" style="margin-top: 20vh; transform: translateY(-50%):">
+            <div class="card-header">Trouvez le Couette & Café de vos rêves !</div>
             <div class="card-body">
                 <form method="post">
+                    {{ form_start(form) }}
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
-                            {% if startDate is defined %}
-                            {{ dump(startDate) }}
-                            {% endif %}
-                                {{ form_start(form) }}
                                 {{ form_row(form.id, {
                                     'attr': {
                                         'class': 'selectpicker',
                                         'data-live-search': "true",
-                                        'data-container':"body",
-                                        'data-style':"btn-light"
+                                        'data-style':"btn-warning"
                                     }
                                 }) }}
                             </div>
+                            <div class="col-1">Du</div>
+                            <div class="col">
+                                {{ form_row(form.startDate, {
+                                    'attr': {
+                                        'class': 'datetimepicker',
+                                    }
+                                }) }}
+                            </div>
+                            <div class="col-1">au</div>
+                            <div class="col">{{ form_row(form.endDate) }}</div>
                             <div class="col">
                                 <button type="submit"
-                                        class="btn btn-warning align-self-end">{{ button_label|default('OK') }}</button>
-                                {{ form_end(form) }}
+                                        class="btn btn-warning align-self-end">{{ button_label|default('Rechercher') }}</button>
                             </div>
                         </div>
                     </div>
+                    {{ form_end(form) }}
                 </form>
             </div>
         </div>
