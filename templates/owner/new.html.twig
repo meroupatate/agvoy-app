@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Owner{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Create new Owner</b></div>
+        {{ include('owner/_form.html.twig') }}
+    </div>
+{% endblock %}

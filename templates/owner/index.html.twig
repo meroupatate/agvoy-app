@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Owner index{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Owner index</b></div>
+        <div class="card-body">
+            <a href="{{ path('owner_new') }}" role="button" class="btn btn-info" style="margin-bottom: 10px"><i
+                        class="fa fa-plus"></i> Add new owner</a>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>User</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for owner in owners %}
+                        <tr>
+                            <td>{{ owner.id }}</td>
+                            <td>{{ owner.firstname }} {{ owner.familyName }}</td>
+                            <td>{{ owner.user }}</td>
+                            <td>
+                                <a href="{{ path('owner_show', {'id': owner.id}) }}" role="button"
+                                   class="btn btn-info"><i
+                                            class="fa fa-eye"></i></a>
+                                <a href="{{ path('owner_edit', {'id': owner.id}) }}" role="button"
+                                   class="btn btn-info"><i
+                                            class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No owner found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

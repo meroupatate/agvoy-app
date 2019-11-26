@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Owner{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Edit Owner</b></div>
+        {{ include('owner/_edit_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+{% endblock %}
