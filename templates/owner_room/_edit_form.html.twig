@@ -1,0 +1,16 @@
+<div class="card-body">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+</div>
+<div class="card-footer">
+    <div class="row">
+        <div class="col align-self-start">
+            <a href="{{ path('owner_room_index') }}" role="button" class="btn btn-secondary">Cancel</a>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+        </div>
+        {{ form_end(form) }}
+        <div class="col align-self-end">{{ include('owner_room/_delete_form.html.twig') }}</div>
+    </div>
+</div>

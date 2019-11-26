@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Room index{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Mes couettes & cafés</b></div>
+        <div class="card-body">
+            <a href="{{ path('owner_room_new') }}" role="button" class="btn btn-info" style="margin-bottom: 10px"><i
+                        class="fa fa-plus"></i> Ajouter une annonce</a>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Région</th>
+                        <th>Résumé</th>
+                        <th>Description</th>
+                        <th>Capacité</th>
+                        <th>Superficie</th>
+                        <th>Prix</th>
+                        <th>Adresse</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for room in rooms %}
+                        <tr>
+                            <td>{% for region in room.regions %}{{ region }} {% endfor %}</td>
+                            <td>{{ room.summary }}</td>
+                            <td>{{ room.description }}</td>
+                            <td>{{ room.capacity }}</td>
+                            <td>{{ room.superficy }} m²</td>
+                            <td>{{ room.price }} €</td>
+                            <td>{{ room.address }}</td>
+                            <td>
+                                <a href="{{ path('owner_room_show', {'id': room.id}) }}" role="button" class="btn btn-info"><i
+                                            class="fa fa-eye"></i></a>
+                                <a href="{{ path('owner_room_edit', {'id': room.id}) }}" role="button" class="btn btn-info"><i
+                                            class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">Vous n'avez aucune annonce...</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

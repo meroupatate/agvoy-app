@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Room{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Create new Room</b></div>
+        {{ include('owner_room/_form.html.twig') }}
+    </div>
+{% endblock %}

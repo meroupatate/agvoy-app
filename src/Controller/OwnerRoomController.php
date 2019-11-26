@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Room;
-use App\Form\RoomType;
+use App\Form\OwnerRoomType;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\Security;
 class OwnerRoomController extends AbstractController
 {
     /**
-     * @Route("/", name="room_index", methods={"GET"})
+     * @Route("/", name="owner_room_index", methods={"GET"})
      * @param Security $security
      * @param RoomRepository $roomRepository
      * @return Response
@@ -26,7 +27,7 @@ class OwnerRoomController extends AbstractController
     {
         $owner = $security->getUser()->getOwner();
 
-        return $this->render('room/index.html.twig', [
+        return $this->render('owner_room/index.html.twig', [
             'rooms' => $roomRepository->findBy(
                 array('owner' => $owner)
             ),
@@ -34,80 +35,101 @@ class OwnerRoomController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="room_new", methods={"GET","POST"})
+     * @Route("/new", name="owner_room_new", methods={"GET","POST"})
+     * @param Security $security
      * @param Request $request
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Security $security, Request $request): Response
     {
         $room = new Room();
-        $form = $this->createForm(RoomType::class, $room);
+        $form = $this->createForm(OwnerRoomType::class, $room);
         $form->handleRequest($request);
+
+        $owner = $security->getUser()->getOwner();
+        $room->setOwner($owner);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($room);
             $entityManager->flush();
 
-            return $this->redirectToRoute('room_index');
+            return $this->redirectToRoute('owner_room_index');
         }
 
-        return $this->render('room/new.html.twig', [
+        return $this->render('owner_room/new.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="room_show", methods={"GET"})
+     * @Route("/{id}", name="owner_room_show", methods={"GET"})
+     * @param Security $security
      * @param Room $room
      * @return Response
      */
-    public function show(Room $room): Response
+    public function show(Security $security, Room $room): Response
     {
-        return $this->render('room/show.html.twig', [
+        $owner = $security->getUser()->getOwner();
+        if ($owner != $room->getOwner()) {
+            throw new AccessDeniedException('Access denied...');
+        }
+        return $this->render('owner_room/show.html.twig', [
             'room' => $room,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="room_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="owner_room_edit", methods={"GET","POST"})
+     * @param Security $security
      * @param Request $request
      * @param Room $room
      * @return Response
      */
-    public function edit(Request $request, Room $room): Response
+    public function edit(Security $security, Request $request, Room $room): Response
     {
-        $form = $this->createForm(RoomType::class, $room);
+        $owner = $security->getUser()->getOwner();
+        if ($owner != $room->getOwner()) {
+            throw new AccessDeniedException('Access denied...');
+        }
+
+        $form = $this->createForm(OwnerRoomType::class, $room);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('room_index');
+            return $this->redirectToRoute('owner_room_index');
         }
 
-        return $this->render('room/edit.html.twig', [
+        return $this->render('owner_room/edit.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="room_delete", methods={"DELETE"})
+     * @Route("/{id}", name="owner_room_delete", methods={"DELETE"})
+     * @param Security $security
      * @param Request $request
      * @param Room $room
      * @return Response
      */
-    public function delete(Request $request, Room $room): Response
+    public function delete(Security $security, Request $request, Room $room): Response
     {
+        $owner = $security->getUser()->getOwner();
+        if ($owner != $room->getOwner()) {
+            throw new AccessDeniedException('Access denied...');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $room->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($room);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('room_index');
+        return $this->redirectToRoute('owner_room_index');
     }
 }
