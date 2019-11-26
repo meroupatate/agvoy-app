@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Region;
 use App\Entity\Room;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,8 +21,15 @@ class RoomType extends AbstractType
             ->add('price')
             ->add('address')
             ->add('owner')
-            ->add('regions')
-        ;
+            ->add('regions', EntityType::class, [
+                'class' => Region::class,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => "true",
+                    'multiple' => "true"
+                ],
+                'multiple' => true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
