@@ -38,6 +38,8 @@ class UserFixtures extends Fixture
     {
         yield ['user@localhost','user','ROLE_USER'];
         yield ['admin@localhost','admin','ROLE_ADMIN'];
+        yield ['client@localhost','client','ROLE_CLIENT'];
+        yield ['owner@localhost','owner','ROLE_OWNER'];
         
     }
 }

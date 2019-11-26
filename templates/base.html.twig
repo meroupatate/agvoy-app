@@ -37,11 +37,23 @@
                             Admin zone
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/room">Rooms</a>
-                            <a class="dropdown-item" href="/region">Regions</a>
-                            <a class="dropdown-item" href="/customer">Customers</a>
-                            <a class="dropdown-item" href="/reservation">Reservations</a>
-                            <a class="dropdown-item" href="/unavailability">Unavailabilities</a>
+                            <a class="dropdown-item" href="/admin/room">Rooms</a>
+                            <a class="dropdown-item" href="/admin/region">Regions</a>
+                            <a class="dropdown-item" href="/admin/customer">Customers</a>
+                            <a class="dropdown-item" href="/admin/reservation">Reservations</a>
+                            <a class="dropdown-item" href="/admin/unavailability">Unavailabilities</a>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_OWNER') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Owner zone
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/owner/room">Rooms</a>
+                            <a class="dropdown-item" href="/owner/unavailability">Unavailabilities</a>
                         </div>
                     </li>
                 {% endif %}
