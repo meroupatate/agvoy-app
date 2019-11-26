@@ -10,7 +10,7 @@
                 <form method="post">
                     {{ form_start(form) }}
                     <div class="form-group">
-                        <div class="row">
+                        <div class="row align-items-center">
                             <div class="col">
                                 {{ form_row(form.id, {
                                     'attr': {
@@ -20,16 +20,19 @@
                                     }
                                 }) }}
                             </div>
-                            <div class="col-1">Du</div>
                             <div class="col">
                                 {{ form_row(form.startDate, {
                                     'attr': {
-                                        'class': 'datetimepicker',
+                                        'class': 'datetimepicker3',
                                     }
                                 }) }}
                             </div>
-                            <div class="col-1">au</div>
-                            <div class="col">{{ form_row(form.endDate) }}</div>
+                            <div class="col">{{ form_row(form.endDate, {
+                                    'attr': {
+                                        'class': 'datetimepicker3',
+                                    }
+                                }) }}
+                                </div>
                             <div class="col">
                                 <button type="submit"
                                         class="btn btn-warning align-self-end">{{ button_label|default('Rechercher') }}</button>
