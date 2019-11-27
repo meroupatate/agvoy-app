@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -18,6 +19,18 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
+            ->add('firstname', TextType::class, [
+                'mapped' => false,
+            ])
+            ->add('familyName', TextType::class, [
+                'mapped' => false,
+            ])
+            ->add('address', TextType::class, [
+                'mapped' => false,
+            ])
+            ->add('country', TextType::class, [
+                'mapped' => false,
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -43,6 +56,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => 'Password'
+            ])
+            ->add('isOwner', CheckboxType::class, [
+                'mapped' => false,
+                'label' => 'I want to register as a room owner',
+                'required' => false
             ])
         ;
     }

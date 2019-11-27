@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Customer;
+use App\Entity\Owner;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
@@ -35,6 +37,28 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $customer = new Customer();
+            $customer->setFirstname($form->get('firstname')->getData());
+            $customer->setFamilyName($form->get('familyName')->getData());
+            $customer->setCountry($form->get('country')->getData());
+
+            $isOwner = $form->get('isOwner')->getData();
+            if ($isOwner == true) {
+
+                $owner = new Owner();
+                $owner->setFirstname($form->get('firstname')->getData());
+                $owner->setFamilyName($form->get('familyName')->getData());
+                $owner->setAddress($form->get('address')->getData());
+                $owner->setCountry($form->get('country')->getData());
+
+                $user->setOwner($owner);
+                $user->setCustomer($customer);
+                $user->setRoles(array('ROLE_USER', 'ROLE_OWNER'));
+            }
+            else {
+                $user->setCustomer($customer);
+                $user->setRoles(array('ROLE_USER'));
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
