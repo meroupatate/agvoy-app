@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unavailability{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Unavailability</b></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Date de début</th>
+                        <td>{{ unavailability.startDate|date("m-d-Y") }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de fin</th>
+                        <td>{{ unavailability.endDate|date("m-d-Y") }}</td>
+                    </tr>
+                    <tr>
+                        <th>Room</th>
+                        <td>{{ unavailability.room }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('owner_unavailability_index') }}" role="button" class="btn btn-secondary">Cancel</a>
+                </div>
+                <div class="col">
+                    <a href="{{ path('owner_unavailability_edit', {'id': unavailability.id}) }}" role="button" class="btn btn-info"><i
+                                class="fa fa-edit"></i>Edit</a>
+                </div>
+                <div class="col align-self-end">{{ include('owner_unavailability/_delete_form.html.twig') }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

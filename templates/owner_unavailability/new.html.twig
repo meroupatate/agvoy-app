@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Unavailability{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Create new Unavailability</b></div>
+        {{ include('owner_unavailability/_form.html.twig') }}
+    </div>
+{% endblock %}
