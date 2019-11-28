@@ -73,7 +73,9 @@ class IndexController extends AbstractController
             if ($found) {
                 $rooms[] = $room;
             }
+            $rooms = $region->getRooms();
         }
+
 
         return $this->render('index/region_show.html.twig', [
             'region' => $region,
