@@ -53,11 +53,11 @@ class RegistrationController extends AbstractController
 
                 $user->setOwner($owner);
                 $user->setCustomer($customer);
-                $user->setRoles(array('ROLE_USER', 'ROLE_OWNER'));
+                $user->setRoles(array('ROLE_USER', 'ROLE_OWNER', 'ROLE_CLIENT'));
             }
             else {
                 $user->setCustomer($customer);
-                $user->setRoles(array('ROLE_USER'));
+                $user->setRoles(array('ROLE_USER', 'ROLE_CLIENT'));
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
