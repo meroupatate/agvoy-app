@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Entity\Room;
+use App\Entity\Unavailability;
 use App\Form\CustomerReservationType;
+use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +45,7 @@ class CustomerReservationController extends AbstractController
     public function delete(Security $security, Request $request, Reservation $reservation): Response
     {
         $customer = $security->getUser()->getCustomer();
-        if ($customer != $reservation->getRoom()->getCustomer()) {
+        if ($customer != $reservation->getCustomer()) {
             throw new AccessDeniedException('Access denied...');
         }
 
@@ -54,4 +57,41 @@ class CustomerReservationController extends AbstractController
 
         return $this->redirectToRoute('customer_reservation_index');
     }
+
+    /**
+     * @Route("/show/{id}/{start}/{end}", name="customer_reservation_show", methods={"GET", "POST"})
+     * @param Room $room
+     * @param $start
+     * @param $end
+     * @param Request $request
+     * @param Security $security
+     * @return Response
+     */
+    public function show(Room $room, $start, $end, Request $request, Security $security): Response
+    {
+        $reservation = new Reservation();
+        $form = $this->createForm(CustomerReservationType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() && $security->getUser()->getCustomer()) {
+            $reservation->setStartDate(\DateTime::createFromFormat('m-d-Y', $start));
+            $reservation->setEndDate(\DateTime::createFromFormat('m-d-Y', $end));
+            $reservation->setRoom($room);
+            $reservation->setCustomer($security->getUser()->getCustomer());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('customer_reservation_index');
+        }
+
+        return $this->render('customer_reservation/show.html.twig', [
+            'room' => $room,
+            'start' => $start,
+            'end' => $end,
+            'form' => $form->createView()
+        ]);
+    }
+
 }

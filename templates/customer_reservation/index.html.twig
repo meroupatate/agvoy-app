@@ -10,20 +10,20 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Customer</th>
-                        <th>Customer contact</th>
-                        <th>Room</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Couette & Cafe</th>
+                        <th>Propriétaire</th>
+                        <th>Contact</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for reservation in reservations %}
                         <tr>
-                            <td>{{ reservation.customer.firstname }} {{ reservation.customer.familyName }}</td>
-                            <td>{{ reservation.customer.user }}</td>
                             <td>{{ reservation.room }}</td>
+                            <td>{{ reservation.room.owner.firstname }} {{ reservation.room.owner.familyName }}</td>
+                            <td>{{ reservation.room.owner.user }}</td>
                             <td>{{ reservation.startDate|date("m-d-Y") }}</td>
                             <td>{{ reservation.endDate|date("m-d-Y") }}</td>
                             <td>

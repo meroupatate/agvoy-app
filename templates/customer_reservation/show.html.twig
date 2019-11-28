@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Aperçu de ma réservation</b></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Couette & café</th>
+                        <td>{{ room }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ room.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Région</th>
+                        <td>{{ room.regions[0] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de début</th>
+                        <td>{{ start }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de fin</th>
+                        <td>{{ end }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact propriétaire</th>
+                        <td>{{ room.owner.user }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('index_region_show', { 'id': room.regions[0].id, 'start': start, 'end': end }) }}" role="button"
+                       class="btn btn-secondary">Annuler</a>
+                </div>
+                <div class="col">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-success align-self-top">{{ button_label|default('Confirmer ma réservation') }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

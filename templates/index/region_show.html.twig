@@ -4,6 +4,7 @@
 
 {% block body %}
     <p><h1><span style="color: white">Ads in the {{ region.name }} area</span></h1></p>
+    <p style="margin-top: 20px"><span style="color: white"> Pour la période du {{ start }} au {{ end }}</span></p>
     {% for room in rooms %}
         <div class="card" style="margin-top: 50px">
             <div class="card-header">
@@ -12,8 +13,7 @@
                         <i class="fa fa-hotel"></i> <b>{{ room.summary }}</b>
                     </div>
                     <div class="col-sm-4">
-                        <a href="#" role="button" class="btn btn-warning btn-sm" style="float: right; margin-left:5px;">Book
-                            it</a>
+                        <a href="{{ path('customer_reservation_show', { 'id': room.id, 'start': start, 'end': end }) }}" role="button" class="btn btn-warning btn-sm" style="float: right; margin-left:5px;">Je réserve !</a>
                         {% if room.id not in likes %}
                             <a href="{{ path('room_like', {'id': room.id, 'start': start, 'end': end}) }}" role="button"
                                class="btn btn-outline-secondary btn-sm" style="float: right"><i class="fa fa-heart"></i></a>
