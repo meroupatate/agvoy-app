@@ -42,8 +42,8 @@ class RegistrationController extends AbstractController
             $customer->setFamilyName($form->get('familyName')->getData());
             $customer->setCountry($form->get('country')->getData());
 
-            $isOwner = $form->get('isOwner')->getData();
-            if ($isOwner == true) {
+            $isOwner = $request->get('isOwner');
+            if ($isOwner === "on") {
 
                 $owner = new Owner();
                 $owner->setFirstname($form->get('firstname')->getData());

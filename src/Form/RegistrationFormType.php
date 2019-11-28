@@ -31,15 +31,6 @@ class RegistrationFormType extends AbstractType
             ->add('country', TextType::class, [
                 'mapped' => false,
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms and conditions.',
-                    ]),
-                ],
-                'label' => 'Agree to terms and conditions'
-            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -57,11 +48,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Password'
             ])
-            ->add('isOwner', CheckboxType::class, [
-                'mapped' => false,
-                'label' => 'I want to register as a room owner',
-                'required' => false
-            ])
+
         ;
     }
 
@@ -69,6 +56,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            "allow_extra_fields" => true
         ]);
     }
 }
