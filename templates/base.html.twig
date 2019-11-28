@@ -28,22 +28,27 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/likes">Favorites</a>
+                    <a class="nav-link" href="/likes">Mes favoris</a>
                 </li>
+                {% if is_granted('ROLE_CLIENT') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer">Mes réservations</a>
+                    </li>
+                {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin zone
+                            Zone admin
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/admin/room">Rooms</a>
-                            <a class="dropdown-item" href="/admin/region">Regions</a>
-                            <a class="dropdown-item" href="/admin/customer">Customers</a>
-                            <a class="dropdown-item" href="/admin/owner">Owners</a>
-                            <a class="dropdown-item" href="/admin/reservation">Reservations</a>
-                            <a class="dropdown-item" href="/admin/unavailability">Unavailabilities</a>
-                            <a class="dropdown-item" href="/admin/user">Users</a>
+                            <a class="dropdown-item" href="/admin/room">Annonces</a>
+                            <a class="dropdown-item" href="/admin/region">Régions</a>
+                            <a class="dropdown-item" href="/admin/customer">Clients</a>
+                            <a class="dropdown-item" href="/admin/owner">Propriétaires</a>
+                            <a class="dropdown-item" href="/admin/reservation">Réservations</a>
+                            <a class="dropdown-item" href="/admin/unavailability">Indisponibilités</a>
+                            <a class="dropdown-item" href="/admin/user">Utilisateurs</a>
                         </div>
                     </li>
                 {% endif %}
@@ -51,7 +56,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Owner zone
+                            Zone owner
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/owner/room">Mes annonces</a>

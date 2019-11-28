@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation index{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin: 10px">
+        <div class="card-header"><b>Mes réservations</b></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Customer contact</th>
+                        <th>Room</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.customer.firstname }} {{ reservation.customer.familyName }}</td>
+                            <td>{{ reservation.customer.user }}</td>
+                            <td>{{ reservation.room }}</td>
+                            <td>{{ reservation.startDate|date("m-d-Y") }}</td>
+                            <td>{{ reservation.endDate|date("m-d-Y") }}</td>
+                            <td>
+                                {{ include('customer_reservation/_delete_form.html.twig') }}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">Vous n'avez aucune réservation...</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
