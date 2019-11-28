@@ -27,21 +27,21 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col">
-                            <a href="{{ path('customer_index') }}" role="button"
-                               class="btn btn-secondary">Cancel</a>
-
-                            <a href="{{ path('customer_edit', {'id': customer.id}) }}" role="button"
-                               class="btn btn-info"><i
-                                        class="fa fa-edit"></i>
-                                Edit</a>
-                        </div>
-                        <div class="col align-self-end">{{ include('customer/_delete_form.html.twig') }}</div>
-                    </div>
-                </div>
             </div>
         </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('customer_index') }}" role="button" class="btn btn-secondary">Cancel</a>
+                </div>
+                <div class="col">
+                    <a href="{{ path('customer_edit', {'id': customer.id}) }}" role="button" class="btn btn-info"><i
+                                class="fa fa-edit"></i> Edit</a>
+                </div>
+                <div class="col align-self-end">{{ include('customer/_delete_form.html.twig') }}</div>
+            </div>
+
+        </div>
+    </div>
     </div>
 {% endblock %}

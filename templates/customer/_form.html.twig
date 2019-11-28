@@ -4,8 +4,13 @@
 </div>
 <div class="card-footer">
     <div class="row">
-        <a href="{{ path('customer_index') }}" role="button" class="btn btn-secondary" style="margin: 5px">Cancel</a>
-        <button class="btn btn-success" style="margin: 5px">{{ button_label|default('Save') }}</button>
+        <div class="col align-self-start">
+            <a href="{{ path('customer_index') }}" role="button" class="btn btn-secondary"
+               style="margin: 5px">Cancel</a>
+        </div>
+        <div class="col">
+            <button class="btn btn-success" style="margin: 5px">{{ button_label|default('Save') }}</button>
+        </div>
     </div>
     {{ form_end(form) }}
 </div>
