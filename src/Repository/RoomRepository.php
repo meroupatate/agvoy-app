@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Region;
 use App\Entity\Room;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -19,22 +20,24 @@ class RoomRepository extends ServiceEntityRepository
         parent::__construct($registry, Room::class);
     }
 
-    // /**
-    //  * @return Room[] Returns an array of Room objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param Region $region
+     * @return Room[]
+     */
+    public function findAllInRegion(Region $region): array
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $em = $this->getEntityManager();
+        $repository = $em->getRepository('App\Entity\Room');
+        $query = $repository->createQueryBuilder('room')
+            ->leftJoin('room.regions', 'region')
+            ->where('region.id = :region_id')
+            ->orderBy('room.id', 'DESC')
+            ->setParameter('region_id', $region->getId())
+            ->getQuery();
+
+        // returns an array of Product objects
+        return $query->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Room

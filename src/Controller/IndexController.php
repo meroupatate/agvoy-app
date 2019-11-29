@@ -54,28 +54,29 @@ class IndexController extends AbstractController
      */
     public function index_region_show(Region $region, String $start, String $end)
     {
+
         $rooms = [];
 
-        foreach ($region->getRooms() as $room) {
-            $found = True;
+        foreach ($this->getDoctrine()->getRepository(Room::class)->findAllInRegion($region) as $room) {
+            $found = false;
             foreach ($room->getReservations() as $res) {
-                if ($start >= $res->getStartDate() || $start <= $res->getEndDate()
-                    || $end >= $res->getStartDate() || $end <= $res->getEndDate()) {
-                    $found = False;
+                if (!(($start >= $res->getStartDate() && $start <= $res->getEndDate())
+                    || ($end >= $res->getStartDate() && $end <= $res->getEndDate())
+                    || ($start <= $res->getStartDate() && $end >= $res->getEndDate()))) {
+                    $found = true;
                 }
             }
             foreach ($room->getUnavailabilities() as $unav) {
-                if ($start >= $unav->getStartDate() || $start <= $unav->getEndDate()
-                    || $end >= $unav->getStartDate() || $end <= $unav->getEndDate()) {
-                    $found = False;
+                if (!(($start >= $unav->getStartDate() && $start <= $unav->getEndDate())
+                    || ($end >= $unav->getStartDate() && $end <= $unav->getEndDate())
+                    || ($start <= $unav->getStartDate() && $end >= $unav->getEndDate()))) {
+                    $found = true;
                 }
             }
-            if ($found) {
+            if ($found === false) {
                 $rooms[] = $room;
             }
-            $rooms = $region->getRooms();
         }
-
 
         return $this->render('index/region_show.html.twig', [
             'region' => $region,

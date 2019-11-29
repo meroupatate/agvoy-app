@@ -3,7 +3,7 @@
 {% block title %}Ads in the {{ region.name }} area{% endblock %}
 
 {% block body %}
-    <p><h1><span style="color: white">Ads in the {{ region.name }} area</span></h1></p>
+    <p><h1><span style="color: white">Couettes & cafés dans la région {{ region.name }}</span></h1></p>
     <p style="margin-top: 20px"><span style="color: white"> Pour la période du {{ start }} au {{ end }}</span></p>
     {% for room in rooms %}
         <div class="card" style="margin-top: 50px">
@@ -59,6 +59,6 @@
             </div>
         </div>
 	{% else %}
-	<p style="margin-top: 20px"><span style="color: white"> No room available during this period :(</span></p>
+	<p style="margin-top: 20px"><span style="color: white"> Il n'y a aucun Couette & Café disponible durant cette période :(</span></p>
     {% endfor %}
 {% endblock %}
