@@ -2,11 +2,14 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Customer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Region;
 use App\Entity\Room;
 use App\Entity\Owner;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\User;
 
 class AppFixtures extends Fixture
 {
@@ -16,19 +19,21 @@ class AppFixtures extends Fixture
     public const BRETAGNE_REGION_REFERENCE = 'bretagne-region';
     public const JEANNE_MICHELINE_OWNER_REFERENCE = 'jeanne-micheline-owner';
 
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
-        //...
-
         $region = new Region();
         $region->setCountry("FR");
         $region->setName("Ile de France");
         $region->setPresentation("La région française capitale");
         $manager->persist($region);
         $manager->flush();
-        // Une fois l'instance de Region sauvée en base de données,
-        // elle dispose d'un identifiant généré par Doctrine, et peut
-        // donc être sauvegardée comme future référence.
         $this->addReference(self::IDF_REGION_REFERENCE, $region);
 
         $region2 = new Region();
@@ -57,6 +62,26 @@ class AppFixtures extends Fixture
         $manager->flush();
         $this->addReference(self::JEANNE_MICHELINE_OWNER_REFERENCE, $owner2);
 
+        $customer = new Customer();
+        $customer->setFirstname("Jean");
+        $customer->setFamilyName("Michel");
+        $customer->setCountry("FR");
+        $manager->persist($customer);
+        $manager->flush();
+
+        $customer2 = new Customer();
+        $customer2->setFirstname("Jeanne");
+        $customer2->setFamilyName("Micheline");
+        $customer2->setCountry("FR");
+        $manager->persist($customer2);
+        $manager->flush();
+
+        $customer3 = new Customer();
+        $customer3->setFirstname("Jean");
+        $customer3->setFamilyName("René");
+        $customer3->setCountry("FR");
+        $manager->persist($customer3);
+        $manager->flush();
 
         $room = new Room();
         $room->setSummary("Beau poulailler ancien à Évry");
@@ -101,5 +126,48 @@ class AppFixtures extends Fixture
         $room3->setOwner($this->getReference(self::JEANNE_MICHELINE_OWNER_REFERENCE));
         $manager->persist($room3);
         $manager->flush();
+
+        $user = new User();
+        [$email,$plainPassword,$roles] = ['user@localhost','user', ['ROLE_USER']];
+        $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
+        $user->setEmail($email);
+        $user->setPassword($encodedPassword);
+        $user->setRoles($roles);
+        $manager->persist($user);
+        $manager->flush();
+
+        $user2 = new User();
+        [$email,$plainPassword,$roles] = ['admin@localhost','admin',['ROLE_ADMIN', 'ROLE_OWNER', 'ROLE_CLIENT', 'ROLE_USER']];
+        $encodedPassword = $this->passwordEncoder->encodePassword($user2, $plainPassword);
+        $user2->setEmail($email);
+        $user2->setPassword($encodedPassword);
+        $user2->setRoles($roles);
+        $user2->setCustomer($customer);
+        $user2->setOwner($owner);
+        $manager->persist($user2);
+        $manager->flush();
+
+        $user3 = new User();
+        [$email,$plainPassword,$roles] = ['client@localhost','client',['ROLE_CLIENT','ROLE_USER']];
+        $encodedPassword = $this->passwordEncoder->encodePassword($user3, $plainPassword);
+        $user3->setEmail($email);
+        $user3->setPassword($encodedPassword);
+        $user3->setRoles($roles);
+        $user3->setCustomer($customer3);
+        $manager->persist($user3);
+        $manager->flush();
+
+        $user4 = new User();
+        [$email,$plainPassword,$roles] = ['owner@localhost','owner', ['ROLE_OWNER', 'ROLE_CLIENT', 'ROLE_USER']];
+        $encodedPassword = $this->passwordEncoder->encodePassword($user4, $plainPassword);
+        $user4->setEmail($email);
+        $user4->setPassword($encodedPassword);
+        $user4->setRoles($roles);
+        $user4->setCustomer($customer2);
+        $user4->setOwner($owner2);
+        $manager->persist($user4);
+        $manager->flush();
+
     }
+
 }
